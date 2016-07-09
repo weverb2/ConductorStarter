@@ -18,6 +18,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    packagingOptions {
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+    }
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
@@ -52,11 +55,8 @@ dependencies {
     compile 'io.reactivex:rxjava:1.1.5'
     compile 'io.reactivex:rxandroid:1.2.0'
 
-    compile 'com.google.auto.value:auto-value:1.0-rc1'
-
-    kapt 'com.ryanharter.auto.value:auto-value-parcel:0.2.3-rc2'
-    kapt 'com.ryanharter.auto.value:auto-value-gson:0.3.2-rc1'
-
+    compile 'me.tatarka:auto-parcel-gson:0.1'
+    kapt 'me.tatarka:auto-parcel-gson-processor:0.1'
 }
 
 kapt {

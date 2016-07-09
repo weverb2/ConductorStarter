@@ -9,22 +9,22 @@ import com.bluelinelabs.conductor.RouterTransaction
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var router: Router
+  lateinit var router: Router
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+  override fun onCreate(savedInstanceState: Bundle?) {
+    super.onCreate(savedInstanceState)
+    setContentView(R.layout.activity_main)
 
-        val viewGroup = findViewById(R.id.app_container) as ViewGroup
-        router = Conductor.attachRouter(this, viewGroup, savedInstanceState)
-        if (!router.hasRootController()) {
-            router.setRoot(RouterTransaction.with(HomeController()))
-        }
+    val viewGroup = findViewById(R.id.app_container) as ViewGroup
+    router = Conductor.attachRouter(this, viewGroup, savedInstanceState)
+    if (!router.hasRootController()) {
+      router.setRoot(RouterTransaction.with(HomeController()))
     }
+  }
 
-    override fun onBackPressed() {
-        if (!router.handleBack()) {
-            super.onBackPressed()
-        }
+  override fun onBackPressed() {
+    if (!router.handleBack()) {
+      super.onBackPressed()
     }
+  }
 }

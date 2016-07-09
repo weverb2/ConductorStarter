@@ -1,11 +1,12 @@
 package com.brandonwever.android.conductorstarter.data.model
 
-import com.google.auto.value.AutoValue
+import auto.parcelgson.AutoParcelGson
 
-@AutoValue abstract class ReportArchive {
+@AutoParcelGson abstract class ReportArchive {
 
-    abstract fun count() : Int
-    abstract fun next() : String
-    abstract fun previous() : String
-    abstract fun results() : List<Report>
+  abstract fun count(): Int
+  abstract fun next(): String
+  abstract fun previous(): String
+  abstract fun results(): List<Report>
+
 }
