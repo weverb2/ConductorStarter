@@ -2,6 +2,7 @@ package com.brandonwever.android.conductorstarter.app
 
 import android.app.Application
 import com.brandonwever.android.conductorstarter.BuildConfig
+import com.squareup.leakcanary.LeakCanary
 import timber.log.Timber
 
 class App : Application() {
@@ -13,6 +14,7 @@ class App : Application() {
 
   override fun onCreate() {
     super.onCreate()
+    LeakCanary.install(this);
     graph = DaggerApplicationComponent.builder().androidModule(AndroidModule(this)).build()
     graph.inject(this)
     if (BuildConfig.DEBUG) {
