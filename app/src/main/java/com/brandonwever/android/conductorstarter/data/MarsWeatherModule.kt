@@ -1,6 +1,5 @@
 package com.brandonwever.android.conductorstarter.data
 
-import com.brandonwever.android.conductorstarter.app.ForApplication
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -15,14 +14,12 @@ class MarsWeatherModule {
 
     @Provides
     @Singleton
-    @ForApplication
     fun provideBaseUrl(): String {
         return "http://marsweather.ingenology.com/"
     }
 
     @Provides
     @Singleton
-    @ForApplication
     fun provideConverter(): Converter.Factory {
         val gson = Gson()
         return GsonConverterFactory.create(gson)
@@ -30,21 +27,18 @@ class MarsWeatherModule {
 
     @Provides
     @Singleton
-    @ForApplication
     fun provideRetrofit(client: OkHttpClient, baseUrl: String, converterFactory: Converter.Factory): Retrofit {
         return Retrofit.Builder().client(client).baseUrl(baseUrl).addConverterFactory(converterFactory).build()
     }
 
     @Provides
     @Singleton
-    @ForApplication
     fun provideMarsWeatherService(retrofit: Retrofit): MarsWeatherService {
         return retrofit.create(MarsWeatherService::class.java)
     }
 
     @Provides
     @Singleton
-    @ForApplication
     fun provideMarsWeatherInteractor(marsWeatherService: MarsWeatherService): MarsWeatherInteractor {
         return MarsWeatherInteractor(marsWeatherService)
     }
