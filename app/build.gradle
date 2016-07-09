@@ -1,0 +1,50 @@
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.3"
+
+    defaultConfig {
+        applicationId "com.brandonwever.android.conductorstarter"
+        minSdkVersion 16
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    compile 'com.bluelinelabs:conductor:2.0.0'
+    compile 'com.bluelinelabs:conductor-support:2.0.0'
+
+    compile 'com.jakewharton:butterknife:8.1.0'
+    kapt 'com.jakewharton:butterknife-compiler:8.1.0'
+
+    compile 'com.jakewharton.timber:timber:4.1.2'
+
+    compile 'com.google.dagger:dagger:2.5'
+    kapt 'com.google.dagger:dagger-compiler:2.5'
+    provided 'javax.annotation:jsr250-api:1.0'
+}
+
+kapt {
+    generateStubs = true
+}
+repositories {
+    mavenCentral()
+}

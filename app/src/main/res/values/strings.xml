@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">Conductor Starter</string>
+    <string name="to_controller_two">To Controller Two</string>
+</resources>
