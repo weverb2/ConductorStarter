@@ -2,7 +2,6 @@ package com.brandonwever.android.conductorstarter.app
 
 import android.app.Application
 import com.brandonwever.android.conductorstarter.BuildConfig
-import com.brandonwever.android.conductorstarter.DaggerApplicationComponent
 import timber.log.Timber
 
 class App : Application() {

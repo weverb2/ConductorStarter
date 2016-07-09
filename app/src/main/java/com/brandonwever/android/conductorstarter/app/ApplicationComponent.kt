@@ -5,9 +5,8 @@ import com.brandonwever.android.conductorstarter.MainActivity
 import com.brandonwever.android.conductorstarter.data.DataModule
 import com.brandonwever.android.conductorstarter.data.MarsWeatherModule
 import dagger.Component
-import javax.inject.Singleton
 
-@Singleton
+@ForApplication
 @Component(modules = arrayOf(AndroidModule::class, DataModule::class, MarsWeatherModule::class))
 interface ApplicationComponent {
     fun inject(application: App)
