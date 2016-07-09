@@ -8,24 +8,28 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.bluelinelabs.conductor.Controller
-import com.bluelinelabs.conductor.RouterTransaction
-import com.bluelinelabs.conductor.changehandler.HorizontalChangeHandler
+import com.brandonwever.android.conductorstarter.app.App
+import com.brandonwever.android.conductorstarter.data.MarsWeatherInteractor
+import rx.android.schedulers.AndroidSchedulers
+import timber.log.Timber
+import javax.inject.Inject
 
 class HomeController : Controller() {
 
-    @BindView(R.id.switch_controller_button)
-    lateinit var button: Button
+  @BindView(R.id.switch_controller_button) lateinit var button: Button
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
-        val view = inflater.inflate(R.layout.controller_home, container, false)
-        ButterKnife.bind(this, view)
-        return view
-    }
+  @Inject lateinit var marsWeatherInteractor: MarsWeatherInteractor
 
-    @OnClick(R.id.switch_controller_button)
-    fun onControllerSwitchClicked() {
-        router.pushController(RouterTransaction.with(SecondController())
-                .pushChangeHandler(HorizontalChangeHandler())
-                .popChangeHandler(HorizontalChangeHandler()))
-    }
+  override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
+    val view = inflater.inflate(R.layout.controller_home, container, false)
+    ButterKnife.bind(this, view)
+    App.graph.inject(this)
+    return view
+  }
+
+  @OnClick(R.id.switch_controller_button)
+  fun onControllerSwitchClicked() {
+    marsWeatherInteractor.getReports().observeOn(AndroidSchedulers.mainThread()).subscribe(
+        { reportList -> Timber.d(reportList.toString()) })
+  }
 }
