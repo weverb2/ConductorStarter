@@ -25,6 +25,7 @@ android {
     main.java.srcDirs += 'src/main/kotlin'
   }
 }
+final LEAK_CANARY_VERSION = '1.4-beta2'
 dependencies {
   compile fileTree(dir: 'libs', include: ['*.jar'])
   testCompile 'junit:junit:4.12'
@@ -57,6 +58,10 @@ dependencies {
 
   compile 'me.tatarka:auto-parcel-gson:0.1'
   kapt 'me.tatarka:auto-parcel-gson-processor:0.1'
+
+  debugCompile 'com.squareup.leakcanary:leakcanary-android:' + LEAK_CANARY_VERSION
+  releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:' + LEAK_CANARY_VERSION
+  testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:' + LEAK_CANARY_VERSION
 }
 
 kapt {
