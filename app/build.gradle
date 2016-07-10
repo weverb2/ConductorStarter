@@ -62,6 +62,8 @@ dependencies {
   debugCompile 'com.squareup.leakcanary:leakcanary-android:' + LEAK_CANARY_VERSION
   releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:' + LEAK_CANARY_VERSION
   testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:' + LEAK_CANARY_VERSION
+
+  compile 'com.jakewharton.threetenabp:threetenabp:1.0.3'
 }
 
 kapt {
