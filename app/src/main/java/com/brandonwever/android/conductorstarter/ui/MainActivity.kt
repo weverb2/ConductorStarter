@@ -6,8 +6,7 @@ import android.view.ViewGroup
 import com.bluelinelabs.conductor.Conductor
 import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
-import com.brandonwever.android.conductorstarter.R.id
-import com.brandonwever.android.conductorstarter.R.layout
+import com.brandonwever.android.conductorstarter.R
 
 class MainActivity : AppCompatActivity() {
 
@@ -15,9 +14,9 @@ class MainActivity : AppCompatActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     super.onCreate(savedInstanceState)
-    setContentView(layout.activity_main)
+    setContentView(R.layout.activity_main)
 
-    val viewGroup = findViewById(id.app_container) as ViewGroup
+    val viewGroup = findViewById(R.id.app_container) as ViewGroup
     router = Conductor.attachRouter(this, viewGroup, savedInstanceState)
     if (!router.hasRootController()) {
       router.setRoot(RouterTransaction.with(HomeController()))

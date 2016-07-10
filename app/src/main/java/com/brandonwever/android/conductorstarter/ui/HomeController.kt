@@ -8,8 +8,7 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.bluelinelabs.conductor.Controller
-import com.brandonwever.android.conductorstarter.R.id
-import com.brandonwever.android.conductorstarter.R.layout
+import com.brandonwever.android.conductorstarter.R
 import com.brandonwever.android.conductorstarter.app.App
 import com.brandonwever.android.conductorstarter.data.marsweather.MarsWeatherInteractor
 import rx.android.schedulers.AndroidSchedulers
@@ -18,18 +17,18 @@ import javax.inject.Inject
 
 class HomeController : Controller() {
 
-  @BindView(id.switch_controller_button) lateinit var button: Button
+  @BindView(R.id.switch_controller_button) lateinit var button: Button
 
   @Inject lateinit var marsWeatherInteractor: MarsWeatherInteractor
 
   override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
-    val view = inflater.inflate(layout.controller_home, container, false)
+    val view = inflater.inflate(R.layout.controller_home, container, false)
     ButterKnife.bind(this, view)
     App.graph.inject(this)
     return view
   }
 
-  @OnClick(id.switch_controller_button)
+  @OnClick(R.id.switch_controller_button)
   fun onControllerSwitchClicked() {
     marsWeatherInteractor.getReports().observeOn(AndroidSchedulers.mainThread()).subscribe(
         { reportList -> Timber.d(reportList.toString()) })
