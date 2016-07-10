@@ -1,6 +1,6 @@
-package com.brandonwever.android.conductorstarter.data
+package com.brandonwever.android.conductorstarter.data.marsweather
 
-import com.brandonwever.android.conductorstarter.data.model.Report
+import com.brandonwever.android.conductorstarter.data.marsweather.model.Report
 import rx.Single
 import rx.schedulers.Schedulers
 import javax.inject.Inject

@@ -1,9 +1,9 @@
 package com.brandonwever.android.conductorstarter.app
 
-import com.brandonwever.android.conductorstarter.HomeController
-import com.brandonwever.android.conductorstarter.MainActivity
+import com.brandonwever.android.conductorstarter.ui.HomeController
+import com.brandonwever.android.conductorstarter.ui.MainActivity
 import com.brandonwever.android.conductorstarter.data.DataModule
-import com.brandonwever.android.conductorstarter.data.MarsWeatherModule
+import com.brandonwever.android.conductorstarter.data.marsweather.MarsWeatherModule
 import dagger.Component
 import javax.inject.Singleton
 

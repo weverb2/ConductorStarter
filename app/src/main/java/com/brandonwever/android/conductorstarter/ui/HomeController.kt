@@ -1,4 +1,4 @@
-package com.brandonwever.android.conductorstarter
+package com.brandonwever.android.conductorstarter.ui
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,8 +8,9 @@ import butterknife.BindView
 import butterknife.ButterKnife
 import butterknife.OnClick
 import com.bluelinelabs.conductor.Controller
+import com.brandonwever.android.conductorstarter.R
 import com.brandonwever.android.conductorstarter.app.App
-import com.brandonwever.android.conductorstarter.data.MarsWeatherInteractor
+import com.brandonwever.android.conductorstarter.data.marsweather.MarsWeatherInteractor
 import rx.android.schedulers.AndroidSchedulers
 import timber.log.Timber
 import javax.inject.Inject

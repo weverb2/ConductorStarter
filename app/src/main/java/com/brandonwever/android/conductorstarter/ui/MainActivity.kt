@@ -1,4 +1,4 @@
-package com.brandonwever.android.conductorstarter
+package com.brandonwever.android.conductorstarter.ui
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import com.bluelinelabs.conductor.Conductor
 import com.bluelinelabs.conductor.Router
 import com.bluelinelabs.conductor.RouterTransaction
+import com.brandonwever.android.conductorstarter.R
 
 class MainActivity : AppCompatActivity() {
 
