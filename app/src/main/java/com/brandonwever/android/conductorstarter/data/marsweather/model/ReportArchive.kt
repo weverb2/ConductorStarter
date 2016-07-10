@@ -1,4 +1,4 @@
-package com.brandonwever.android.conductorstarter.data.model
+package com.brandonwever.android.conductorstarter.data.marsweather.model
 
 import auto.parcelgson.AutoParcelGson
 

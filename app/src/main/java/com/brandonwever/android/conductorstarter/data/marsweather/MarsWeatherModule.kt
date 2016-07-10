@@ -1,10 +1,11 @@
-package com.brandonwever.android.conductorstarter.data
+package com.brandonwever.android.conductorstarter.data.marsweather
 
 import auto.parcelgson.gson.AutoParcelGsonTypeAdapterFactory
 import com.brandonwever.android.conductorstarter.data.typeadapters.LocalDateTypeAdapter
 import com.brandonwever.android.conductorstarter.data.typeadapters.LocalTimeTypeAdapter
 import com.brandonwever.android.conductorstarter.data.typeadapters.ZonedDateTimeTypeAdapter
 import com.google.gson.FieldNamingPolicy
+import com.google.gson.FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
@@ -13,7 +14,9 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
 import org.threeten.bp.ZonedDateTime
 import retrofit2.Converter
+import retrofit2.Converter.Factory
 import retrofit2.Retrofit
+import retrofit2.Retrofit.Builder
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import rx.schedulers.Schedulers
@@ -30,13 +33,13 @@ class MarsWeatherModule {
 
   @Provides
   @Singleton
-  fun provideConverter(): Converter.Factory {
+  fun provideConverter(): Factory {
     val gson = GsonBuilder()
         .registerTypeAdapterFactory(AutoParcelGsonTypeAdapterFactory())
         .registerTypeAdapter(ZonedDateTime::class.java, ZonedDateTimeTypeAdapter())
         .registerTypeAdapter(LocalDate::class.java, LocalDateTypeAdapter())
         .registerTypeAdapter(LocalTime::class.java, LocalTimeTypeAdapter())
-        .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+        .setFieldNamingPolicy(LOWER_CASE_WITH_UNDERSCORES)
         .create()
     return GsonConverterFactory.create(gson)
   }
@@ -44,8 +47,8 @@ class MarsWeatherModule {
   @Provides
   @Singleton
   fun provideRetrofit(client: OkHttpClient, baseUrl: String,
-      converterFactory: Converter.Factory): Retrofit {
-    return Retrofit.Builder()
+      converterFactory: Factory): Retrofit {
+    return Builder()
         .client(client)
         .baseUrl(baseUrl)
         .addConverterFactory(converterFactory)
