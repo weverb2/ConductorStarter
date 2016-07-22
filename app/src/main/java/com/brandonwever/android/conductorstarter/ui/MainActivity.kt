@@ -8,14 +8,12 @@ import android.view.MenuItem
 import android.view.ViewGroup
 import butterknife.BindView
 import butterknife.ButterKnife
-import com.bluelinelabs.conductor.Conductor
-import com.bluelinelabs.conductor.Router
-import com.bluelinelabs.conductor.RouterTransaction
+import com.bluelinelabs.conductor.*
 import com.brandonwever.android.conductorstarter.R
 import com.brandonwever.android.conductorstarter.app.App
 import javax.inject.Inject
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, NavDrawerOwner.View {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, NavDrawerOwner.View, ControllerChangeHandler.ControllerChangeListener {
 
     lateinit var router: Router
     @Inject lateinit var navDrawerOwner: NavDrawerOwner
@@ -33,6 +31,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navigationView.setNavigationItemSelectedListener(this)
         navDrawerOwner.takeView(this)
         router = Conductor.attachRouter(this, viewGroup, savedInstanceState)
+        router.addChangeListener(this)
 
         if (!router.hasRootController()) {
             router.setRoot(RouterTransaction.with(HomeController()))
@@ -45,22 +44,29 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onBackPressed() {
+        if (drawerLayout.isDrawerOpen(navigationView)) {
+            drawerLayout.closeDrawers()
+            return
+        }
         if (!router.handleBack()) {
             super.onBackPressed()
         }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.first_controller -> router.setRoot(RouterTransaction.with(HomeController()))
-            R.id.second_controller -> {
-                router.setRoot(RouterTransaction.with(HomeController()))
-                router.pushController(RouterTransaction.with(SecondController()))
+        if (!item.isChecked) {
+            when (item.itemId) {
+                R.id.first_controller -> router.popToRoot()
+                R.id.second_controller -> menuNavigateToController(SecondController())
             }
         }
-
         drawerLayout.closeDrawers()
         return true
+    }
+
+    private fun menuNavigateToController(controller: Controller) {
+        router.popToRoot()
+        router.pushController(RouterTransaction.with(controller))
     }
 
     override fun openDrawer() {
@@ -75,7 +81,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
     }
 
-    override fun setCheckedMenuItem(menuItemId: Int) {
-        navigationView.setCheckedItem(menuItemId)
+    override fun onChangeCompleted(to: Controller?, from: Controller?, isPush: Boolean, container: ViewGroup?, handler: ControllerChangeHandler?) {
+        if (to is HomeController) {
+            navigationView.setCheckedItem(R.id.first_controller)
+        } else if (to is SecondController) {
+            navigationView.setCheckedItem(R.id.second_controller)
+        }
+    }
+
+    override fun onChangeStarted(to: Controller?, from: Controller?, isPush: Boolean, container: ViewGroup?, handler: ControllerChangeHandler?) {
     }
 }

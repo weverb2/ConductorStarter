@@ -5,6 +5,7 @@ import com.brandonwever.android.conductorstarter.data.marsweather.MarsWeatherMod
 import com.brandonwever.android.conductorstarter.ui.HomeController
 import com.brandonwever.android.conductorstarter.ui.MainActivity
 import com.brandonwever.android.conductorstarter.ui.NavDrawerOwner
+import com.brandonwever.android.conductorstarter.ui.SecondController
 import dagger.Component
 import javax.inject.Singleton
 
@@ -16,4 +17,6 @@ interface ApplicationComponent {
     fun inject(mainActivity: MainActivity)
 
     fun inject(homeController: HomeController)
+
+    fun inject(secondController: SecondController)
 }

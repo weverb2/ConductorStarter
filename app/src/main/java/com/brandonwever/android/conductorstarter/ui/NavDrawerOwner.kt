@@ -1,43 +1,37 @@
 package com.brandonwever.android.conductorstarter.ui
 
-import android.support.annotation.RawRes
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
 class NavDrawerOwner() {
 
-    var navigationView: View? = null
+    var view: View? = null
 
-    fun takeView(navigationView: View) {
-        this.navigationView = navigationView
+    fun takeView(view: View) {
+        this.view = view
     }
 
     fun dropView() {
-        navigationView = null
+        view = null
     }
 
     fun openDrawer() {
-        navigationView?.openDrawer()
+        view?.openDrawer()
     }
 
     fun setDrawerLockedClosed() {
-        navigationView?.setDrawerLockedClosed()
+        view?.setDrawerLockedClosed()
     }
 
     fun setDrawerUnlocked() {
-        navigationView?.setDrawerUnlocked()
-    }
-
-    fun setCheckedMenuItem(@RawRes menuItemId: Int) {
-        navigationView?.setCheckedMenuItem(menuItemId)
+        view?.setDrawerUnlocked()
     }
 
     interface View {
         fun openDrawer()
         fun setDrawerLockedClosed()
         fun setDrawerUnlocked()
-        fun setCheckedMenuItem(@RawRes menuItemId: Int)
     }
 
     @Module class NavDrawerModule() {

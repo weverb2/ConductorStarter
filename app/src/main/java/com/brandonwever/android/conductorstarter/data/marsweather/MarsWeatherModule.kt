@@ -44,8 +44,7 @@ class MarsWeatherModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(client: OkHttpClient, baseUrl: String,
-                        converterFactory: Factory): Retrofit {
+    fun provideRetrofit(client: OkHttpClient, baseUrl: String, converterFactory: Factory): Retrofit {
         return Builder()
                 .client(client)
                 .baseUrl(baseUrl)
