@@ -7,8 +7,8 @@ import javax.inject.Inject
 
 class MarsWeatherInteractor @Inject constructor(val api: MarsWeatherService) {
 
-  fun getReports(): Single<List<Report>> {
-    return api.getReportArchive().subscribeOn(
-        Schedulers.io()).map { reportArchive -> reportArchive.results() }
-  }
+    fun getReports(): Single<List<Report>> {
+        return api.getReportArchive().subscribeOn(
+                Schedulers.io()).map { reportArchive -> reportArchive.results() }
+    }
 }

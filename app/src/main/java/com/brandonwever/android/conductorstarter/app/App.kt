@@ -8,19 +8,19 @@ import timber.log.Timber
 
 class App : Application() {
 
-  companion object {
-    //platformStatic allow access it from java code
-    @JvmStatic lateinit var graph: ApplicationComponent
-  }
-
-  override fun onCreate() {
-    super.onCreate()
-    LeakCanary.install(this)
-    AndroidThreeTen.init(this)
-    graph = DaggerApplicationComponent.builder().androidModule(AndroidModule(this)).build()
-    graph.inject(this)
-    if (BuildConfig.DEBUG) {
-      Timber.plant(Timber.DebugTree());
+    companion object {
+        //platformStatic allow access it from java code
+        @JvmStatic lateinit var graph: ApplicationComponent
     }
-  }
+
+    override fun onCreate() {
+        super.onCreate()
+        LeakCanary.install(this)
+        AndroidThreeTen.init(this)
+        graph = DaggerApplicationComponent.builder().androidModule(AndroidModule(this)).build()
+        graph.inject(this)
+        if (BuildConfig.DEBUG) {
+            Timber.plant(Timber.DebugTree());
+        }
+    }
 }

@@ -5,11 +5,11 @@ import org.threeten.bp.ZonedDateTime
 import org.threeten.bp.format.DateTimeFormatter
 
 class DateUtil {
-  fun toISO(dateTime: ZonedDateTime): String {
-    return dateTime.format(DateTimeFormatter.ISO_ZONED_DATE_TIME)
-  }
+    fun toISO(dateTime: ZonedDateTime): String {
+        return dateTime.format(DateTimeFormatter.ISO_ZONED_DATE_TIME)
+    }
 
-  fun toDate(localDate: LocalDate): String {
-    return localDate.format(DateTimeFormatter.ISO_LOCAL_DATE)
-  }
+    fun toDate(localDate: LocalDate): String {
+        return localDate.format(DateTimeFormatter.ISO_LOCAL_DATE)
+    }
 }

@@ -5,5 +5,5 @@ import retrofit2.http.GET
 import rx.Single
 
 interface MarsWeatherService {
-  @GET("v1/archive") fun getReportArchive(): Single<ReportArchive>
+    @GET("v1/archive") fun getReportArchive(): Single<ReportArchive>
 }
