@@ -1,6 +1,7 @@
 package com.brandonwever.android.conductorstarter.data
 
 import android.app.Application
+import com.brandonwever.android.conductorstarter.data.lcbo.LCBOReducer
 import dagger.Module
 import dagger.Provides
 import okhttp3.Cache
@@ -18,8 +19,14 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun provideStore(appState: AppState): Store {
-        return Store(appState)
+    fun provideAppReducer(): Reducer<AppState, Action> {
+        return CombineReducers(LCBOReducer())
+    }
+
+    @Provides
+    @Singleton
+    fun provideStore(appState: AppState, reducer: Reducer<AppState, Action>): RxStore<AppState, Action> {
+        return RxStore(appState, reducer)
     }
 
     @Provides

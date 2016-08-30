@@ -5,10 +5,11 @@ import android.view.View
 import android.view.ViewGroup
 import com.bluelinelabs.conductor.Controller
 import com.brandonwever.android.conductorstarter.app.App
-import com.brandonwever.android.conductorstarter.data.Store
-import com.brandonwever.android.conductorstarter.data.lcbo.LCBOApiState
+import com.brandonwever.android.conductorstarter.data.Action
+import com.brandonwever.android.conductorstarter.data.AppState
+import com.brandonwever.android.conductorstarter.data.RxStore
+import com.brandonwever.android.conductorstarter.data.lcbo.LCBOActionCreator
 import com.brandonwever.android.conductorstarter.data.lcbo.LCBOInteractor
-import com.brandonwever.android.conductorstarter.data.lcbo.model.Pager
 import org.jetbrains.anko.AnkoContext
 import rx.android.schedulers.AndroidSchedulers
 import timber.log.Timber
@@ -18,19 +19,23 @@ class SecondController : Controller, PaginationDelegate, View.OnClickListener {
 
     @Inject lateinit var navDrawerOwner: NavDrawerOwner
     @Inject lateinit var interactor: LCBOInteractor
-    @Inject lateinit var store: Store
+    @Inject lateinit var store: RxStore<AppState, Action>
+    @Inject lateinit var actionCreator: LCBOActionCreator
     var productAdapter: ProductListingAdapter? = null
-    var pager: Pager? = null
 
     constructor() : super() {
         App.graph.inject(this)
-        loadNewest()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         productAdapter = ProductListingAdapter()
-        productAdapter!!.products = store.state.lcboApiState.products
-        pager = store.state.lcboApiState.pager
+        store.state().map { appState -> appState.lcboApiState }.distinctUntilChanged().observeOn(AndroidSchedulers.mainThread()).subscribe(
+                { lcboApiState ->
+                    productAdapter?.products = lcboApiState.products
+                    productAdapter?.notifyDataSetChanged()
+                },
+                { e -> Timber.e(e.message) })
+        actionCreator.getNewest()
         val view = SecondControllerView(this, productAdapter!!, this).createView(AnkoContext.Companion.create(inflater.context, this))
         return view
     }
@@ -44,21 +49,7 @@ class SecondController : Controller, PaginationDelegate, View.OnClickListener {
         navDrawerOwner.openDrawer()
     }
 
-    fun loadNewest() {
-        pager = null
-        loadMore()
-    }
-
     override fun loadMore() {
-        val nextPage = pager?.nextPage ?: 1
-        interactor.getProducts(nextPage).observeOn(AndroidSchedulers.mainThread()).subscribe(
-                { response ->
-                    val newList = store.state.lcboApiState.products + response.result
-                    store.state = store.state.copy(lcboApiState = LCBOApiState(newList, response.pager))
-                    productAdapter!!.products = store.state.lcboApiState.products
-                    productAdapter!!.notifyDataSetChanged()
-                    pager = store.state.lcboApiState.pager
-                },
-                { error -> Timber.e(error.message) })
+        actionCreator.getNextPage()
     }
 }

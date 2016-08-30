@@ -1,6 +1,9 @@
 package com.brandonwever.android.conductorstarter.data.lcbo
 
 import auto.parcelgson.gson.AutoParcelGsonTypeAdapterFactory
+import com.brandonwever.android.conductorstarter.data.Action
+import com.brandonwever.android.conductorstarter.data.AppState
+import com.brandonwever.android.conductorstarter.data.RxStore
 import com.brandonwever.android.conductorstarter.data.typeadapters.LocalDateTypeAdapter
 import com.brandonwever.android.conductorstarter.data.typeadapters.LocalTimeTypeAdapter
 import com.brandonwever.android.conductorstarter.data.typeadapters.ZonedDateTimeTypeAdapter
@@ -94,5 +97,11 @@ class LCBOModule {
     @Singleton
     fun provideLCBOInteractor(service: LCBOService): LCBOInteractor {
         return LCBOInteractor(service)
+    }
+
+    @Provides
+    @Singleton
+    fun provideLCBOActionCreator(interactor: LCBOInteractor, store: RxStore<AppState, Action>): LCBOActionCreator {
+        return LCBOActionCreator(interactor, store)
     }
 }
