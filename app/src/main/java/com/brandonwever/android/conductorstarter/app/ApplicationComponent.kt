@@ -1,6 +1,7 @@
 package com.brandonwever.android.conductorstarter.app
 
 import com.brandonwever.android.conductorstarter.data.DataModule
+import com.brandonwever.android.conductorstarter.data.lcbo.LCBOModule
 import com.brandonwever.android.conductorstarter.data.marsweather.MarsWeatherModule
 import com.brandonwever.android.conductorstarter.ui.HomeController
 import com.brandonwever.android.conductorstarter.ui.MainActivity
@@ -10,7 +11,7 @@ import dagger.Component
 import javax.inject.Singleton
 
 @Singleton
-@Component(modules = arrayOf(AndroidModule::class, DataModule::class, MarsWeatherModule::class, NavDrawerOwner.NavDrawerModule::class))
+@Component(modules = arrayOf(AndroidModule::class, DataModule::class, MarsWeatherModule::class, NavDrawerOwner.NavDrawerModule::class, LCBOModule::class))
 interface ApplicationComponent {
     fun inject(application: App)
 
