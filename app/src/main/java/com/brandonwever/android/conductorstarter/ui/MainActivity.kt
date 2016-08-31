@@ -6,11 +6,16 @@ import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.ViewGroup
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.bluelinelabs.conductor.*
 import com.brandonwever.android.conductorstarter.R
 import com.brandonwever.android.conductorstarter.app.App
+import com.brandonwever.android.conductorstarter.ui.util.changeHandlerFrameLayout
+import org.jetbrains.anko.AnkoComponent
+import org.jetbrains.anko.AnkoContext
+import org.jetbrains.anko.design.navigationView
+import org.jetbrains.anko.matchParent
+import org.jetbrains.anko.support.v4.drawerLayout
+import org.jetbrains.anko.wrapContent
 import javax.inject.Inject
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, NavDrawerOwner.View, ControllerChangeHandler.ControllerChangeListener {
@@ -89,5 +94,38 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onChangeStarted(to: Controller?, from: Controller?, isPush: Boolean, container: ViewGroup?, handler: ControllerChangeHandler?) {
+    }
+
+//    <com.bluelinelabs.conductor.ChangeHandlerFrameLayout
+//    android:id="@+id/app_container"
+//    android:layout_height="match_parent"
+//    android:layout_width="match_parent"
+//    tools:context=".ui.MainActivity">
+//    </com.bluelinelabs.conductor.ChangeHandlerFrameLayout>
+//    <android.support.design.widget.NavigationView
+//    android:id="@+id/navigation_view"
+//    android:layout_height="match_parent"
+//    android:layout_width="wrap_content"
+//    app:menu="@menu/navigation_menu"
+//    android:fitsSystemWindows="true"
+//    android:layout_gravity="start"/>
+//    </android.support.v4.widget.DrawerLayout>
+
+
+    class MainActivityView : AnkoComponent<MainActivity> {
+        override fun createView(ui: AnkoContext<MainActivity>) = with(ui) {
+            drawerLayout {
+                layoutParams = ViewGroup.LayoutParams(matchParent, matchParent)
+                fitsSystemWindows = true
+
+                changeHandlerFrameLayout {
+                    layoutParams = ViewGroup.LayoutParams(matchParent, matchParent)
+                }
+                navigationView {
+                    layoutParams = ViewGroup.LayoutParams(wrapContent, matchParent)
+                }
+            }
+        }
+
     }
 }

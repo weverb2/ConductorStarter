@@ -76,6 +76,8 @@ dependencies {
     compile 'org.jetbrains.anko:anko-support-v4:' + ANKO_VERSION
     compile 'org.jetbrains.anko:anko-appcompat-v7:' + ANKO_VERSION
     compile "org.jetbrains.anko:anko-recyclerview-v7:" + ANKO_VERSION
+    compile "org.jetbrains.anko:anko-design:" + ANKO_VERSION
+
 
 }
 

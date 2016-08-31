@@ -1,6 +1,5 @@
 package com.brandonwever.android.conductorstarter.data.lcbo
 
-import auto.parcelgson.gson.AutoParcelGsonTypeAdapterFactory
 import com.brandonwever.android.conductorstarter.data.Action
 import com.brandonwever.android.conductorstarter.data.AppState
 import com.brandonwever.android.conductorstarter.data.RxStore
@@ -66,7 +65,6 @@ class LCBOModule {
     @Singleton
     fun provideConverter(): Converter.Factory {
         val gson = GsonBuilder()
-                .registerTypeAdapterFactory(AutoParcelGsonTypeAdapterFactory())
                 .registerTypeAdapter(ZonedDateTime::class.java, ZonedDateTimeTypeAdapter())
                 .registerTypeAdapter(LocalDate::class.java, LocalDateTypeAdapter())
                 .registerTypeAdapter(LocalTime::class.java, LocalTimeTypeAdapter())

@@ -1,6 +1,5 @@
 package com.brandonwever.android.conductorstarter.data.marsweather
 
-import auto.parcelgson.gson.AutoParcelGsonTypeAdapterFactory
 import com.brandonwever.android.conductorstarter.data.typeadapters.LocalDateTypeAdapter
 import com.brandonwever.android.conductorstarter.data.typeadapters.LocalTimeTypeAdapter
 import com.brandonwever.android.conductorstarter.data.typeadapters.ZonedDateTimeTypeAdapter
@@ -40,7 +39,6 @@ class MarsWeatherModule {
     @Singleton
     fun provideConverter(): Factory {
         val gson = GsonBuilder()
-                .registerTypeAdapterFactory(AutoParcelGsonTypeAdapterFactory())
                 .registerTypeAdapter(ZonedDateTime::class.java, ZonedDateTimeTypeAdapter())
                 .registerTypeAdapter(LocalDate::class.java, LocalDateTypeAdapter())
                 .registerTypeAdapter(LocalTime::class.java, LocalTimeTypeAdapter())
