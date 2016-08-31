@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <item name="product_name" type="id"/>
-    <item name="product_unit_type" type="id"/>
-    <item name="product_thumbnail" type="id"/>
-</resources>

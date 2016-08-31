@@ -28,6 +28,7 @@ android {
 }
 final SUPPORT_VERSION = '23.4.0'
 final LEAK_CANARY_VERSION = '1.4-beta2'
+final ANKO_VERSION = '0.9'
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
@@ -44,9 +45,6 @@ dependencies {
 
     compile 'com.bluelinelabs:conductor:2.0.0'
     compile 'com.bluelinelabs:conductor-support:2.0.0'
-
-    compile 'com.jakewharton:butterknife:8.1.0'
-    kapt 'com.jakewharton:butterknife-compiler:8.1.0'
 
     compile 'com.jakewharton.timber:timber:4.1.2'
 
@@ -68,19 +66,16 @@ dependencies {
     compile 'io.reactivex:rxjava:1.1.5'
     compile 'io.reactivex:rxandroid:1.2.0'
 
-    compile 'me.tatarka:auto-parcel-gson:0.1'
-    kapt 'me.tatarka:auto-parcel-gson-processor:0.1'
-
     debugCompile 'com.squareup.leakcanary:leakcanary-android:' + LEAK_CANARY_VERSION
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:' + LEAK_CANARY_VERSION
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:' + LEAK_CANARY_VERSION
 
     compile 'com.jakewharton.threetenabp:threetenabp:1.0.3'
 
-    compile 'org.jetbrains.anko:anko-sdk15:0.9'
-    compile 'org.jetbrains.anko:anko-support-v4:0.9'
-    compile 'org.jetbrains.anko:anko-appcompat-v7:0.9'
-    compile "org.jetbrains.anko:anko-recyclerview-v7:0.9"
+    compile 'org.jetbrains.anko:anko-sdk15:' + ANKO_VERSION
+    compile 'org.jetbrains.anko:anko-support-v4:' + ANKO_VERSION
+    compile 'org.jetbrains.anko:anko-appcompat-v7:' + ANKO_VERSION
+    compile "org.jetbrains.anko:anko-recyclerview-v7:" + ANKO_VERSION
 
 }
 
