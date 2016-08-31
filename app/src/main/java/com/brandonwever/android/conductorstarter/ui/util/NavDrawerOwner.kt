@@ -1,4 +1,4 @@
-package com.brandonwever.android.conductorstarter.ui
+package com.brandonwever.android.conductorstarter.ui.util
 
 import dagger.Module
 import dagger.Provides

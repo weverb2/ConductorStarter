@@ -1,4 +1,4 @@
-package com.brandonwever.android.conductorstarter.ui
+package com.brandonwever.android.conductorstarter.ui.productlist
 
 import android.content.Context
 import android.util.AttributeSet
@@ -7,7 +7,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import org.jetbrains.anko.*
 
-class ProductListingView : LinearLayout {
+class ProductListItemView : LinearLayout {
 
     lateinit var productName: TextView
     lateinit var productUnitType: TextView
@@ -15,9 +15,9 @@ class ProductListingView : LinearLayout {
 
     private fun init() = AnkoContext.createDelegate(this).apply {
         orientation = LinearLayout.HORIZONTAL
-        layoutParams = LinearLayout.LayoutParams(matchParent, wrapContent)
+        layoutParams = LayoutParams(matchParent, wrapContent)
         productImage = imageView {
-            layoutParams = LinearLayout.LayoutParams(dip(48), dip(48))
+            layoutParams = LayoutParams(dip(48), dip(48))
         }
         verticalLayout() {
             productName = textView {

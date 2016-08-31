@@ -1,4 +1,4 @@
-package com.brandonwever.android.conductorstarter.ui
+package com.brandonwever.android.conductorstarter.ui.productlist
 
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
@@ -13,6 +13,9 @@ import com.brandonwever.android.conductorstarter.data.AppState
 import com.brandonwever.android.conductorstarter.data.RxStore
 import com.brandonwever.android.conductorstarter.data.lcbo.LCBOActionCreator
 import com.brandonwever.android.conductorstarter.data.lcbo.LCBOInteractor
+import com.brandonwever.android.conductorstarter.ui.util.EndlessScrollListener
+import com.brandonwever.android.conductorstarter.ui.util.NavDrawerOwner
+import com.brandonwever.android.conductorstarter.ui.util.PaginationDelegate
 import org.jetbrains.anko.AnkoComponent
 import org.jetbrains.anko.AnkoContext
 import org.jetbrains.anko.appcompat.v7.navigationIconResource
@@ -24,7 +27,7 @@ import rx.android.schedulers.AndroidSchedulers
 import timber.log.Timber
 import javax.inject.Inject
 
-class SecondController : Controller, PaginationDelegate, View.OnClickListener {
+class ProductListController : Controller, PaginationDelegate, View.OnClickListener {
 
     @Inject lateinit var navDrawerOwner: NavDrawerOwner
     @Inject lateinit var interactor: LCBOInteractor
@@ -45,7 +48,7 @@ class SecondController : Controller, PaginationDelegate, View.OnClickListener {
                     productAdapter?.notifyDataSetChanged()
                 },
                 { e -> Timber.e(e.message) })
-        val view = SecondControllerView(this, productAdapter!!, this).createView(AnkoContext.Companion.create(inflater.context, this))
+        val view = SecondControllerView(this, productAdapter!!, this).createView(AnkoContext.create(inflater.context, this))
         return view
     }
 
@@ -62,16 +65,16 @@ class SecondController : Controller, PaginationDelegate, View.OnClickListener {
         actionCreator.getNextPage()
     }
 
-    class SecondControllerView(val paginationDelegate: PaginationDelegate, val listAdapter: ProductListingAdapter, val navigationClickListener: View.OnClickListener) : AnkoComponent<SecondController> {
+    class SecondControllerView(val paginationDelegate: PaginationDelegate, val listAdapter: ProductListingAdapter, val navigationClickListener: View.OnClickListener) : AnkoComponent<ProductListController> {
         companion object {
             val RECYCLER_VIEW = 1
         }
 
-        override fun createView(ui: AnkoContext<SecondController>) = with(ui) {
+        override fun createView(ui: AnkoContext<ProductListController>) = with(ui) {
             verticalLayout {
                 toolbar() {
                     setTitleTextColor(ContextCompat.getColor(ctx, android.R.color.white))
-                    title = "Second Controller"
+                    title = "Product List"
                     backgroundColor = ContextCompat.getColor(ctx, R.color.colorPrimary)
                     navigationIconResource = R.drawable.ic_menu
                     setNavigationOnClickListener(navigationClickListener)

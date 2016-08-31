@@ -3,10 +3,10 @@ package com.brandonwever.android.conductorstarter.app
 import com.brandonwever.android.conductorstarter.data.DataModule
 import com.brandonwever.android.conductorstarter.data.lcbo.LCBOModule
 import com.brandonwever.android.conductorstarter.data.marsweather.MarsWeatherModule
-import com.brandonwever.android.conductorstarter.ui.HomeController
 import com.brandonwever.android.conductorstarter.ui.MainActivity
-import com.brandonwever.android.conductorstarter.ui.NavDrawerOwner
-import com.brandonwever.android.conductorstarter.ui.SecondController
+import com.brandonwever.android.conductorstarter.ui.login.LoginController
+import com.brandonwever.android.conductorstarter.ui.productlist.ProductListController
+import com.brandonwever.android.conductorstarter.ui.util.NavDrawerOwner
 import dagger.Component
 import javax.inject.Singleton
 
@@ -17,7 +17,7 @@ interface ApplicationComponent {
 
     fun inject(mainActivity: MainActivity)
 
-    fun inject(homeController: HomeController)
+    fun inject(loginController: LoginController)
 
-    fun inject(secondController: SecondController)
+    fun inject(productListController: ProductListController)
 }
