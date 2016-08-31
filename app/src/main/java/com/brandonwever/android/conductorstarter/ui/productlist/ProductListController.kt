@@ -27,7 +27,7 @@ import rx.android.schedulers.AndroidSchedulers
 import timber.log.Timber
 import javax.inject.Inject
 
-class ProductListController : Controller, PaginationDelegate, View.OnClickListener {
+class ProductListController : Controller(), PaginationDelegate, View.OnClickListener {
 
     @Inject lateinit var navDrawerOwner: NavDrawerOwner
     @Inject lateinit var interactor: LCBOInteractor
@@ -35,7 +35,7 @@ class ProductListController : Controller, PaginationDelegate, View.OnClickListen
     @Inject lateinit var actionCreator: LCBOActionCreator
     var productAdapter: ProductListingAdapter? = null
 
-    constructor() : super() {
+    init {
         App.graph.inject(this)
         actionCreator.getNewest()
     }

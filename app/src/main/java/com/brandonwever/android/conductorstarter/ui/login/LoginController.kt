@@ -21,18 +21,18 @@ import org.jetbrains.anko.appcompat.v7.navigationIconResource
 import org.jetbrains.anko.appcompat.v7.toolbar
 import javax.inject.Inject
 
-class LoginController : Controller, TextView.OnEditorActionListener {
+class LoginController : Controller(), TextView.OnEditorActionListener {
 
     @Inject lateinit var navDrawerOwner: NavDrawerOwner
 
     var name = ""
     var password = ""
 
-    constructor() : super() {
+    init {
+        App.graph.inject(this)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
-        App.graph.inject(this)
         return HomeControllerUI().createView(AnkoContext.create(inflater.context, this))
     }
 
