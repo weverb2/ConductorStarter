@@ -6,31 +6,27 @@ import android.support.v4.widget.DrawerLayout
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.ViewGroup
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.bluelinelabs.conductor.*
 import com.brandonwever.android.conductorstarter.R
 import com.brandonwever.android.conductorstarter.app.App
+import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
+
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, NavDrawerOwner.View, ControllerChangeHandler.ControllerChangeListener {
 
     lateinit var router: Router
     @Inject lateinit var navDrawerOwner: NavDrawerOwner
 
-    @BindView(R.id.app_container) lateinit var viewGroup: ViewGroup
-    @BindView(R.id.navigation_view) lateinit var navigationView: NavigationView
-    @BindView(R.id.drawer_layout) lateinit var drawerLayout: DrawerLayout
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         App.graph.inject(this)
 
         setContentView(R.layout.activity_main)
-        ButterKnife.bind(this)
+
         navigationView.setNavigationItemSelectedListener(this)
         navDrawerOwner.takeView(this)
-        router = Conductor.attachRouter(this, viewGroup, savedInstanceState)
+        router = Conductor.attachRouter(this, appContainer, savedInstanceState)
         router.addChangeListener(this)
 
         if (!router.hasRootController()) {
@@ -90,4 +86,5 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onChangeStarted(to: Controller?, from: Controller?, isPush: Boolean, container: ViewGroup?, handler: ControllerChangeHandler?) {
     }
+
 }

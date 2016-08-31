@@ -48,9 +48,6 @@ dependencies {
 
     compile 'com.jakewharton.timber:timber:4.1.2'
 
-    compile 'com.jakewharton:butterknife:8.4.0'
-    kapt 'com.jakewharton:butterknife-compiler:8.4.0'
-
     compile 'com.google.dagger:dagger:2.5'
     kapt 'com.google.dagger:dagger-compiler:2.5'
     provided 'javax.annotation:jsr250-api:1.0'
@@ -79,6 +76,8 @@ dependencies {
     compile 'org.jetbrains.anko:anko-support-v4:' + ANKO_VERSION
     compile 'org.jetbrains.anko:anko-appcompat-v7:' + ANKO_VERSION
     compile "org.jetbrains.anko:anko-recyclerview-v7:" + ANKO_VERSION
+    compile "org.jetbrains.anko:anko-design:" + ANKO_VERSION
+
 
 }
 
