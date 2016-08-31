@@ -1,8 +1,8 @@
 package com.brandonwever.android.conductorstarter.data.lcbo
 
-import com.brandonwever.android.conductorstarter.data.Action
-import com.brandonwever.android.conductorstarter.data.AppState
-import com.brandonwever.android.conductorstarter.data.Reducer
+import com.brandonwever.android.conductorstarter.data.redux.Action
+import com.brandonwever.android.conductorstarter.data.redux.AppState
+import com.brandonwever.android.conductorstarter.data.redux.Reducer
 
 class LCBOReducer : Reducer<AppState, Action> {
     override fun call(state: AppState, action: Action): AppState {

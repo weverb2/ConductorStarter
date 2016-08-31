@@ -2,6 +2,7 @@ package com.brandonwever.android.conductorstarter.data
 
 import android.app.Application
 import com.brandonwever.android.conductorstarter.data.lcbo.LCBOReducer
+import com.brandonwever.android.conductorstarter.data.redux.*
 import dagger.Module
 import dagger.Provides
 import okhttp3.Cache

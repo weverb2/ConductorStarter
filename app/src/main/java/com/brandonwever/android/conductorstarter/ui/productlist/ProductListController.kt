@@ -8,11 +8,10 @@ import android.view.ViewGroup
 import com.bluelinelabs.conductor.Controller
 import com.brandonwever.android.conductorstarter.R
 import com.brandonwever.android.conductorstarter.app.App
-import com.brandonwever.android.conductorstarter.data.Action
-import com.brandonwever.android.conductorstarter.data.AppState
-import com.brandonwever.android.conductorstarter.data.RxStore
 import com.brandonwever.android.conductorstarter.data.lcbo.LCBOActionCreator
-import com.brandonwever.android.conductorstarter.data.lcbo.LCBOInteractor
+import com.brandonwever.android.conductorstarter.data.redux.Action
+import com.brandonwever.android.conductorstarter.data.redux.AppState
+import com.brandonwever.android.conductorstarter.data.redux.RxStore
 import com.brandonwever.android.conductorstarter.ui.util.EndlessScrollListener
 import com.brandonwever.android.conductorstarter.ui.util.NavDrawerOwner
 import com.brandonwever.android.conductorstarter.ui.util.PaginationDelegate
@@ -30,7 +29,6 @@ import javax.inject.Inject
 class ProductListController : Controller(), PaginationDelegate, View.OnClickListener {
 
     @Inject lateinit var navDrawerOwner: NavDrawerOwner
-    @Inject lateinit var interactor: LCBOInteractor
     @Inject lateinit var store: RxStore<AppState, Action>
     @Inject lateinit var actionCreator: LCBOActionCreator
     var productAdapter: ProductListingAdapter? = null

@@ -1,4 +1,4 @@
-package com.brandonwever.android.conductorstarter.data
+package com.brandonwever.android.conductorstarter.data.redux
 
 import rx.Observable
 import rx.Scheduler
