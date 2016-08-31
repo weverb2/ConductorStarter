@@ -8,6 +8,7 @@ import com.google.gson.FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
+import okhttp3.Cache
 import okhttp3.OkHttpClient
 import org.threeten.bp.LocalDate
 import org.threeten.bp.LocalTime
@@ -22,6 +23,12 @@ import javax.inject.Singleton
 
 @Module
 class MarsWeatherModule {
+
+    @Provides
+    @Singleton
+    fun provideOkHttpClient(cache: Cache): OkHttpClient {
+        return OkHttpClient.Builder().cache(cache).build()
+    }
 
     @Provides
     @Singleton

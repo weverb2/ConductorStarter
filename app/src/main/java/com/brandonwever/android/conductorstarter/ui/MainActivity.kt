@@ -82,10 +82,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onChangeCompleted(to: Controller?, from: Controller?, isPush: Boolean, container: ViewGroup?, handler: ControllerChangeHandler?) {
-        if (to is HomeController) {
-            navigationView.setCheckedItem(R.id.first_controller)
-        } else if (to is SecondController) {
-            navigationView.setCheckedItem(R.id.second_controller)
+        when (to) {
+            is HomeController -> navigationView.setCheckedItem(R.id.first_controller)
+            is SecondController -> navigationView.setCheckedItem(R.id.second_controller)
         }
     }
 

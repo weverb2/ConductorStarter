@@ -1,39 +1,55 @@
 package com.brandonwever.android.conductorstarter.ui
 
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.Toolbar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import butterknife.BindView
-import butterknife.ButterKnife
 import com.bluelinelabs.conductor.Controller
-import com.brandonwever.android.conductorstarter.R
 import com.brandonwever.android.conductorstarter.app.App
+import com.brandonwever.android.conductorstarter.data.Action
+import com.brandonwever.android.conductorstarter.data.AppState
+import com.brandonwever.android.conductorstarter.data.RxStore
+import com.brandonwever.android.conductorstarter.data.lcbo.LCBOActionCreator
+import com.brandonwever.android.conductorstarter.data.lcbo.LCBOInteractor
+import org.jetbrains.anko.AnkoContext
+import rx.android.schedulers.AndroidSchedulers
+import timber.log.Timber
 import javax.inject.Inject
 
-class SecondController : Controller(), View.OnClickListener {
+class SecondController : Controller, PaginationDelegate, View.OnClickListener {
 
     @Inject lateinit var navDrawerOwner: NavDrawerOwner
+    @Inject lateinit var interactor: LCBOInteractor
+    @Inject lateinit var store: RxStore<AppState, Action>
+    @Inject lateinit var actionCreator: LCBOActionCreator
+    var productAdapter: ProductListingAdapter? = null
 
-    @BindView(R.id.main_tool_bar) lateinit var toolbar: Toolbar
+    constructor() : super() {
+        App.graph.inject(this)
+        actionCreator.getNewest()
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
-        App.graph.inject(this)
-        val view = inflater.inflate(R.layout.controller_second, container, false)
-        ButterKnife.bind(this, view)
-        initToolbar()
+        productAdapter = ProductListingAdapter()
+        store.state().map { appState -> appState.lcboApiState }.distinctUntilChanged().observeOn(AndroidSchedulers.mainThread()).subscribe(
+                { lcboApiState ->
+                    productAdapter?.products = lcboApiState.products
+                    productAdapter?.notifyDataSetChanged()
+                },
+                { e -> Timber.e(e.message) })
+        val view = SecondControllerView(this, productAdapter!!, this).createView(AnkoContext.Companion.create(inflater.context, this))
         return view
     }
 
-    private fun initToolbar() {
-        toolbar.setTitleTextColor(ContextCompat.getColor(applicationContext, android.R.color.white))
-        toolbar.title = "Second Controller"
-        toolbar.setNavigationIcon(R.drawable.ic_menu)
-        toolbar.setNavigationOnClickListener(this)
+    override fun onDestroyView(view: View?) {
+        super.onDestroyView(view)
+        productAdapter = null
     }
 
-    override fun onClick(v: View?) {
+    override fun onClick(v: View) {
         navDrawerOwner.openDrawer()
+    }
+
+    override fun loadMore() {
+        actionCreator.getNextPage()
     }
 }

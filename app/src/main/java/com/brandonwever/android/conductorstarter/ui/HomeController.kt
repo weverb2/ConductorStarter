@@ -1,55 +1,105 @@
 package com.brandonwever.android.conductorstarter.ui
 
 import android.support.v4.content.ContextCompat
-import android.support.v7.widget.Toolbar
+import android.text.InputType
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import butterknife.BindView
-import butterknife.ButterKnife
-import butterknife.OnClick
+import android.view.inputmethod.EditorInfo
+import android.widget.TextView
+import android.widget.Toast
 import com.bluelinelabs.conductor.Controller
 import com.bluelinelabs.conductor.RouterTransaction
 import com.brandonwever.android.conductorstarter.R
 import com.brandonwever.android.conductorstarter.app.App
-import com.brandonwever.android.conductorstarter.data.marsweather.MarsWeatherInteractor
-import rx.android.schedulers.AndroidSchedulers
-import timber.log.Timber
+import com.brandonwever.android.conductorstarter.util.Keyboards
+import org.jetbrains.anko.*
+import org.jetbrains.anko.appcompat.v7.navigationIconResource
+import org.jetbrains.anko.appcompat.v7.toolbar
 import javax.inject.Inject
 
-class HomeController : Controller(), View.OnClickListener {
+class HomeController : Controller, TextView.OnEditorActionListener {
 
-    @Inject lateinit var marsWeatherInteractor: MarsWeatherInteractor
     @Inject lateinit var navDrawerOwner: NavDrawerOwner
 
-    @BindView(R.id.switch_controller_button) lateinit var button: Button
-    @BindView(R.id.main_tool_bar) lateinit var toolbar: Toolbar
+    var name = ""
+    var password = ""
+
+    constructor() : super() {
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         App.graph.inject(this)
-        val view = inflater.inflate(R.layout.controller_home, container, false)
-        ButterKnife.bind(this, view)
-        initToolbar()
-        return view
+        return HomeControllerUI().createView(AnkoContext.Companion.create(inflater.context, this))
     }
 
-    private fun initToolbar() {
-        toolbar.setTitleTextColor(ContextCompat.getColor(applicationContext, android.R.color.white))
-        toolbar.title = "Home Controller"
-        toolbar.setNavigationIcon(R.drawable.ic_menu)
-        toolbar.setNavigationOnClickListener(this)
-    }
-
-    @OnClick(R.id.switch_controller_button)
-    fun onControllerSwitchClicked() {
-        marsWeatherInteractor.getReports()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ reportList -> Timber.d(reportList.toString()) })
-        router.pushController(RouterTransaction.with(SecondController()))
-    }
-
-    override fun onClick(v: View?) {
+    fun onNavigationClicked() {
+        Keyboards.hideKeyboard(view.context, view)
         navDrawerOwner.openDrawer()
     }
+
+    fun nameUpdated(newName: String) {
+        name = newName
+    }
+
+    fun passwordUpdated(newPassword: String) {
+        password = newPassword
+    }
+
+    fun onLoginClicked() {
+        Keyboards.hideKeyboard(view.context, view)
+        if (name.equals("user") && password.equals("test")) {
+            router.pushController(RouterTransaction.with(SecondController()))
+            return
+        }
+        Toast.makeText(view.context, "Login Failed", Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
+        if (actionId == EditorInfo.IME_ACTION_SEND) {
+            onLoginClicked()
+            return true
+        }
+        return false
+    }
+
+    inner class HomeControllerUI() : AnkoComponent<HomeController> {
+        override fun createView(ui: AnkoContext<HomeController>) = with(ui) {
+            verticalLayout {
+                toolbar() {
+                    setTitleTextColor(ContextCompat.getColor(ctx, android.R.color.white))
+                    title = "Home Controller"
+                    backgroundResource = R.color.colorPrimary
+                    navigationIconResource = R.drawable.ic_menu
+                    setNavigationOnClickListener({ onNavigationClicked() })
+                }
+                editText(name) {
+                    hint = "Username"
+                    imeOptions = EditorInfo.IME_ACTION_NEXT
+                    singleLine = true
+                    textChangedListener {
+                        onTextChanged { text, start, before, count ->
+                            nameUpdated(text.toString())
+                        }
+                    }
+                }
+                editText(password) {
+                    hint = "Password"
+                    imeOptions = EditorInfo.IME_ACTION_SEND
+                    inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
+                    textChangedListener {
+                        onTextChanged { text, start, before, count ->
+                            passwordUpdated(text.toString())
+                        }
+                    }
+                    setOnEditorActionListener(this@HomeController)
+                }
+                button("Login") {
+                    onClick { onLoginClicked() }
+                }
+            }
+        }
+    }
 }
+

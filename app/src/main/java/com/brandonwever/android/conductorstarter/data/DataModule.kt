@@ -1,10 +1,10 @@
 package com.brandonwever.android.conductorstarter.data
 
 import android.app.Application
+import com.brandonwever.android.conductorstarter.data.lcbo.LCBOReducer
 import dagger.Module
 import dagger.Provides
 import okhttp3.Cache
-import okhttp3.OkHttpClient
 import java.io.File
 import javax.inject.Singleton
 
@@ -13,15 +13,27 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun provideCache(app: Application): Cache {
-        val cacheDir = File(app.cacheDir, "http")
-        return Cache(cacheDir, DISK_CACHE_SIZE.toLong())
+    fun provideInitialAppState(): AppState {
+        return AppState.INITIAL
     }
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(cache: Cache): OkHttpClient {
-        return OkHttpClient.Builder().cache(cache).build()
+    fun provideAppReducer(): Reducer<AppState, Action> {
+        return CombineReducers(LCBOReducer())
+    }
+
+    @Provides
+    @Singleton
+    fun provideStore(appState: AppState, reducer: Reducer<AppState, Action>): RxStore<AppState, Action> {
+        return RxStore(appState, reducer)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCache(app: Application): Cache {
+        val cacheDir = File(app.cacheDir, "http")
+        return Cache(cacheDir, DISK_CACHE_SIZE.toLong())
     }
 
     companion object {
