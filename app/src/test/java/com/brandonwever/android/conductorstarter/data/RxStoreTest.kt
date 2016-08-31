@@ -1,5 +1,7 @@
 package com.brandonwever.android.conductorstarter.data
 
+import com.brandonwever.android.conductorstarter.data.redux.Reducer
+import com.brandonwever.android.conductorstarter.data.redux.RxStore
 import org.junit.Before
 import org.junit.Test
 import rx.observers.TestSubscriber

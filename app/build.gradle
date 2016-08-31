@@ -79,6 +79,7 @@ dependencies {
     compile "org.jetbrains.anko:anko-design:" + ANKO_VERSION
 
 
+    testCompile "com.nhaarman:mockito-kotlin:0.6.0"
 }
 
 kapt {

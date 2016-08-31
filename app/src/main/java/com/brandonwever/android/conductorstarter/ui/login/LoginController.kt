@@ -88,6 +88,7 @@ class LoginController : Controller(), TextView.OnEditorActionListener {
                 }
                 editText(password) {
                     hint = "Password"
+                    singleLine = true
                     imeOptions = EditorInfo.IME_ACTION_SEND
                     inputType = InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD
                     textChangedListener {

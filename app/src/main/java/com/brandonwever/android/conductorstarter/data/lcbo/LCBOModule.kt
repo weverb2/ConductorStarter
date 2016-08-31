@@ -1,8 +1,10 @@
 package com.brandonwever.android.conductorstarter.data.lcbo
 
-import com.brandonwever.android.conductorstarter.data.Action
-import com.brandonwever.android.conductorstarter.data.AppState
-import com.brandonwever.android.conductorstarter.data.RxStore
+import com.brandonwever.android.conductorstarter.data.lcbo.interactor.LCBOInteractor
+import com.brandonwever.android.conductorstarter.data.lcbo.interactor.RealLCBOInteractor
+import com.brandonwever.android.conductorstarter.data.redux.Action
+import com.brandonwever.android.conductorstarter.data.redux.AppState
+import com.brandonwever.android.conductorstarter.data.redux.RxStore
 import com.brandonwever.android.conductorstarter.data.typeadapters.LocalDateTypeAdapter
 import com.brandonwever.android.conductorstarter.data.typeadapters.LocalTimeTypeAdapter
 import com.brandonwever.android.conductorstarter.data.typeadapters.ZonedDateTimeTypeAdapter
@@ -94,7 +96,7 @@ class LCBOModule {
     @Provides
     @Singleton
     fun provideLCBOInteractor(service: LCBOService): LCBOInteractor {
-        return LCBOInteractor(service)
+        return RealLCBOInteractor(service)
     }
 
     @Provides
