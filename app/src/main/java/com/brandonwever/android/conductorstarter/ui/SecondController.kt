@@ -25,6 +25,7 @@ class SecondController : Controller, PaginationDelegate, View.OnClickListener {
 
     constructor() : super() {
         App.graph.inject(this)
+        actionCreator.getNewest()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
@@ -35,7 +36,6 @@ class SecondController : Controller, PaginationDelegate, View.OnClickListener {
                     productAdapter?.notifyDataSetChanged()
                 },
                 { e -> Timber.e(e.message) })
-        actionCreator.getNewest()
         val view = SecondControllerView(this, productAdapter!!, this).createView(AnkoContext.Companion.create(inflater.context, this))
         return view
     }

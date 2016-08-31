@@ -6,7 +6,9 @@ class CombineReducers<S, A> @Inject constructor(vararg val reducers: Reducer<S, 
     override fun call(state: S, action: A): S {
         var newState = state
         for (reducer: Reducer<S, A> in reducers) {
-            newState = reducer.call(state, action)
+//            Timber.d(reducer.javaClass.simpleName)
+//            Timber.d(newState.toString())
+            newState = reducer.call(newState, action)
         }
         return newState
     }
