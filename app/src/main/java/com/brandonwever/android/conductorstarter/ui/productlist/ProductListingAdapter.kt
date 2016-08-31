@@ -1,4 +1,4 @@
-package com.brandonwever.android.conductorstarter.ui
+package com.brandonwever.android.conductorstarter.ui.productlist
 
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
@@ -19,7 +19,7 @@ class ProductListingAdapter : RecyclerView.Adapter<ProductListingAdapter.Product
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
-        val view = ProductListingView(parent.context)
+        val view = ProductListItemView(parent.context)
         return ProductViewHolder(view)
     }
 
@@ -32,7 +32,7 @@ class ProductListingAdapter : RecyclerView.Adapter<ProductListingAdapter.Product
         var productUnitType: TextView
         var productThumbnail: ImageView
 
-        constructor(itemView: ProductListingView) : super(itemView) {
+        constructor(itemView: ProductListItemView) : super(itemView) {
             productName = itemView.productName
             productUnitType = itemView.productUnitType
             productThumbnail = itemView.productImage

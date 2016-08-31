@@ -1,4 +1,4 @@
-package com.brandonwever.android.conductorstarter.ui
+package com.brandonwever.android.conductorstarter.ui.login
 
 import android.support.v4.content.ContextCompat
 import android.text.InputType
@@ -13,13 +13,15 @@ import com.bluelinelabs.conductor.Controller
 import com.bluelinelabs.conductor.RouterTransaction
 import com.brandonwever.android.conductorstarter.R
 import com.brandonwever.android.conductorstarter.app.App
+import com.brandonwever.android.conductorstarter.ui.productlist.ProductListController
+import com.brandonwever.android.conductorstarter.ui.util.NavDrawerOwner
 import com.brandonwever.android.conductorstarter.util.Keyboards
 import org.jetbrains.anko.*
 import org.jetbrains.anko.appcompat.v7.navigationIconResource
 import org.jetbrains.anko.appcompat.v7.toolbar
 import javax.inject.Inject
 
-class HomeController : Controller, TextView.OnEditorActionListener {
+class LoginController : Controller, TextView.OnEditorActionListener {
 
     @Inject lateinit var navDrawerOwner: NavDrawerOwner
 
@@ -31,7 +33,7 @@ class HomeController : Controller, TextView.OnEditorActionListener {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         App.graph.inject(this)
-        return HomeControllerUI().createView(AnkoContext.Companion.create(inflater.context, this))
+        return HomeControllerUI().createView(AnkoContext.create(inflater.context, this))
     }
 
     fun onNavigationClicked() {
@@ -50,7 +52,7 @@ class HomeController : Controller, TextView.OnEditorActionListener {
     fun onLoginClicked() {
         Keyboards.hideKeyboard(view.context, view)
         if (name.equals("user") && password.equals("test")) {
-            router.pushController(RouterTransaction.with(SecondController()))
+            router.pushController(RouterTransaction.with(ProductListController()))
             return
         }
         Toast.makeText(view.context, "Login Failed", Toast.LENGTH_SHORT).show()
@@ -64,12 +66,12 @@ class HomeController : Controller, TextView.OnEditorActionListener {
         return false
     }
 
-    inner class HomeControllerUI() : AnkoComponent<HomeController> {
-        override fun createView(ui: AnkoContext<HomeController>) = with(ui) {
+    inner class HomeControllerUI() : AnkoComponent<LoginController> {
+        override fun createView(ui: AnkoContext<LoginController>) = with(ui) {
             verticalLayout {
                 toolbar() {
                     setTitleTextColor(ContextCompat.getColor(ctx, android.R.color.white))
-                    title = "Home Controller"
+                    title = "Login"
                     backgroundResource = R.color.colorPrimary
                     navigationIconResource = R.drawable.ic_menu
                     setNavigationOnClickListener({ onNavigationClicked() })
@@ -93,7 +95,7 @@ class HomeController : Controller, TextView.OnEditorActionListener {
                             passwordUpdated(text.toString())
                         }
                     }
-                    setOnEditorActionListener(this@HomeController)
+                    setOnEditorActionListener(this@LoginController)
                 }
                 button("Login") {
                     onClick { onLoginClicked() }

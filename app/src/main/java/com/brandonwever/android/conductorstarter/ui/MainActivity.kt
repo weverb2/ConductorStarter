@@ -9,6 +9,9 @@ import android.view.ViewGroup
 import com.bluelinelabs.conductor.*
 import com.brandonwever.android.conductorstarter.R
 import com.brandonwever.android.conductorstarter.app.App
+import com.brandonwever.android.conductorstarter.ui.login.LoginController
+import com.brandonwever.android.conductorstarter.ui.productlist.ProductListController
+import com.brandonwever.android.conductorstarter.ui.util.NavDrawerOwner
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
@@ -30,7 +33,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         router.addChangeListener(this)
 
         if (!router.hasRootController()) {
-            router.setRoot(RouterTransaction.with(HomeController()))
+            router.setRoot(RouterTransaction.with(LoginController()))
         }
     }
 
@@ -53,7 +56,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         if (!item.isChecked) {
             when (item.itemId) {
                 R.id.first_controller -> router.popToRoot()
-                R.id.second_controller -> menuNavigateToController(SecondController())
+                R.id.second_controller -> menuNavigateToController(ProductListController())
             }
         }
         drawerLayout.closeDrawers()
@@ -79,8 +82,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onChangeCompleted(to: Controller?, from: Controller?, isPush: Boolean, container: ViewGroup?, handler: ControllerChangeHandler?) {
         when (to) {
-            is HomeController -> navigationView.setCheckedItem(R.id.first_controller)
-            is SecondController -> navigationView.setCheckedItem(R.id.second_controller)
+            is LoginController -> navigationView.setCheckedItem(R.id.first_controller)
+            is ProductListController -> navigationView.setCheckedItem(R.id.second_controller)
         }
     }
 

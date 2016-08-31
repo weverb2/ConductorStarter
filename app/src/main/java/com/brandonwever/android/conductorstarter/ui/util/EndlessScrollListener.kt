@@ -1,7 +1,8 @@
-package com.brandonwever.android.conductorstarter.ui
+package com.brandonwever.android.conductorstarter.ui.util
 
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import com.brandonwever.android.conductorstarter.ui.util.PaginationDelegate
 
 class EndlessScrollListener(val layoutManager: LinearLayoutManager, val delegate: PaginationDelegate) : RecyclerView.OnScrollListener() {
     private val VISIBLE_THRESHOLD = 5
