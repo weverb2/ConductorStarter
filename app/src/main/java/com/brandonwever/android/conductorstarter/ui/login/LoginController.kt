@@ -2,12 +2,10 @@ package com.brandonwever.android.conductorstarter.ui.login
 
 import android.support.v4.content.ContextCompat
 import android.text.InputType
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.widget.TextView
 import android.widget.Toast
 import com.bluelinelabs.conductor.Controller
 import com.bluelinelabs.conductor.RouterTransaction
@@ -21,7 +19,7 @@ import org.jetbrains.anko.appcompat.v7.navigationIconResource
 import org.jetbrains.anko.appcompat.v7.toolbar
 import javax.inject.Inject
 
-class LoginController : Controller(), TextView.OnEditorActionListener {
+class LoginController : Controller() {
 
     @Inject lateinit var navDrawerOwner: NavDrawerOwner
 
@@ -58,7 +56,7 @@ class LoginController : Controller(), TextView.OnEditorActionListener {
         Toast.makeText(view.context, "Login Failed", Toast.LENGTH_SHORT).show()
     }
 
-    override fun onEditorAction(v: TextView?, actionId: Int, event: KeyEvent?): Boolean {
+    fun handleEditorAction(actionId: Int): Boolean {
         if (actionId == EditorInfo.IME_ACTION_SEND) {
             onLoginClicked()
             return true
@@ -96,7 +94,8 @@ class LoginController : Controller(), TextView.OnEditorActionListener {
                             passwordUpdated(text.toString())
                         }
                     }
-                    setOnEditorActionListener(this@LoginController)
+                    onEditorAction { textView, actionId, keyEvent -> handleEditorAction(actionId) }
+
                 }
                 button("Login") {
                     onClick { onLoginClicked() }

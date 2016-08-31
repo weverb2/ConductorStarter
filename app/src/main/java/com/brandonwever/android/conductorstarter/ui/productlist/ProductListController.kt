@@ -26,7 +26,7 @@ import rx.android.schedulers.AndroidSchedulers
 import timber.log.Timber
 import javax.inject.Inject
 
-class ProductListController : Controller(), PaginationDelegate, View.OnClickListener {
+class ProductListController : Controller(), PaginationDelegate {
 
     @Inject lateinit var navDrawerOwner: NavDrawerOwner
     @Inject lateinit var store: RxStore<AppState, Action>
@@ -46,7 +46,7 @@ class ProductListController : Controller(), PaginationDelegate, View.OnClickList
                     productAdapter?.notifyDataSetChanged()
                 },
                 { e -> Timber.e(e.message) })
-        val view = SecondControllerView(this, productAdapter!!, this).createView(AnkoContext.create(inflater.context, this))
+        val view = SecondControllerView().createView(AnkoContext.create(inflater.context, this))
         return view
     }
 
@@ -55,7 +55,7 @@ class ProductListController : Controller(), PaginationDelegate, View.OnClickList
         productAdapter = null
     }
 
-    override fun onClick(v: View) {
+    fun onClick() {
         navDrawerOwner.openDrawer()
     }
 
@@ -63,10 +63,8 @@ class ProductListController : Controller(), PaginationDelegate, View.OnClickList
         actionCreator.getNextPage()
     }
 
-    class SecondControllerView(val paginationDelegate: PaginationDelegate, val listAdapter: ProductListingAdapter, val navigationClickListener: View.OnClickListener) : AnkoComponent<ProductListController> {
-        companion object {
-            val RECYCLER_VIEW = 1
-        }
+    inner class SecondControllerView() : AnkoComponent<ProductListController> {
+        val RECYCLER_VIEW = 1
 
         override fun createView(ui: AnkoContext<ProductListController>) = with(ui) {
             verticalLayout {
@@ -75,17 +73,16 @@ class ProductListController : Controller(), PaginationDelegate, View.OnClickList
                     title = "Product List"
                     backgroundColor = ContextCompat.getColor(ctx, R.color.colorPrimary)
                     navigationIconResource = R.drawable.ic_menu
-                    setNavigationOnClickListener(navigationClickListener)
+                    setNavigationOnClickListener({ onClick() })
                 }
                 recyclerView {
                     id = RECYCLER_VIEW
                     val linearLayoutManager = LinearLayoutManager(ctx, LinearLayoutManager.VERTICAL, false)
-                    adapter = listAdapter
+                    adapter = productAdapter
                     layoutManager = linearLayoutManager
-                    addOnScrollListener(EndlessScrollListener(linearLayoutManager, paginationDelegate))
+                    addOnScrollListener(EndlessScrollListener(linearLayoutManager, this@ProductListController))
                 }
             }
         }
     }
-
 }
