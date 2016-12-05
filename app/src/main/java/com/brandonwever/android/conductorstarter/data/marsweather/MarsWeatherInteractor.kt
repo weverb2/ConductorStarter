@@ -6,7 +6,6 @@ import rx.schedulers.Schedulers
 import javax.inject.Inject
 
 class MarsWeatherInteractor @Inject constructor(val api: MarsWeatherService) {
-
     fun getReports(): Single<List<Report>> {
         return api.getReportArchive()
                 .subscribeOn(Schedulers.io())

@@ -15,7 +15,6 @@ import com.brandonwever.android.conductorstarter.ui.util.NavDrawerOwner
 import kotlinx.android.synthetic.main.activity_main.*
 import javax.inject.Inject
 
-
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener, NavDrawerOwner.View, ControllerChangeHandler.ControllerChangeListener {
 
     lateinit var router: Router

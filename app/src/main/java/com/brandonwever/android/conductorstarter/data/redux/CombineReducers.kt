@@ -10,5 +10,4 @@ class CombineReducers<S, A> @Inject constructor(vararg val reducers: Reducer<S, 
         }
         return newState
     }
-
 }
