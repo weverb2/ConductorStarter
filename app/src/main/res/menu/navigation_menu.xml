@@ -3,9 +3,9 @@
     <group android:checkableBehavior="single">
         <item
                 android:id="@+id/first_controller"
-                android:title="First Controller"/>
+                android:title="@string/first_controller"/>
         <item
                 android:id="@+id/second_controller"
-                android:title="Second Controller"/>
+                android:title="@string/second_controller"/>
     </group>
 </menu>
